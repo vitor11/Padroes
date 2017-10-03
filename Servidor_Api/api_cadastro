@@ -1,0 +1,28 @@
+<?php
+@$conect = mysql_connect("192.185.176.15","siste183_vitor","aimeudeus");
+@mysql_select_db("siste183_api_app", $conect);
+
+$info = file_get_contents('php://input');
+$arrayinfo = json_decode($info);
+
+$emailJava = $arrayinfo->email;
+$senhaJava = $arrayinfo->senha;
+$nomeJava = $arrayinfo->nome;
+$telefoneJava = $arrayinfo->telefone;
+
+
+@$query = mysql_query("INSERT INTO `usuario`(`usr_email`, `usr_senha`, `usr_nome`, `usr_celular`) VALUES('".$emailJava."','".$senhaJava."','".$nomeJava."',".$telefoneJava.")");
+
+if($query){
+ $status = true;
+}
+else{
+ $status = false;
+}
+
+$data =  [
+"status" => $status
+ ];
+
+print_r(json_encode($data));
+?>
